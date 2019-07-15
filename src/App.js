@@ -4,8 +4,7 @@ import React from 'react';
 
 function App() {
   return (
-    
-      <div className="dell">
+      <div>
         <GlobalStyle />
             121
       </div>
