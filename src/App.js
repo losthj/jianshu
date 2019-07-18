@@ -1,18 +1,18 @@
 import React from 'react';
 import { GlobalStyle } from "./style";
 import Header from './common/header/index'
-import {GlobalStyles} from './statics/iconfont/iconfont'
+import {GlobalStyles} from './statics/iconfont/iconfont';
+import {Provider} from 'react-redux';
+import store from './store/index'
 
 function App() {
   return (
       <div>
         <GlobalStyle />
         <GlobalStyles />
-        <div>
+        <Provider store={store}>
           <Header />
-        </div>
-        
-          
+        </Provider>
       </div>
     
   );
