@@ -14,3 +14,9 @@ https://meyerweb.com/eric/tools/css/reset/
 yarn add redux和yarn add react-redux
 
 4、使用combineReducers完成对数据的拆分管理 (合并store)
+
+5、immutable.js来管理store中的数据  https://facebook.github.io/immutable-js/
+
+    immutable对象不可改变的
+
+6、使用redux-immutable统一数据格式
