@@ -8,21 +8,38 @@ import {HeaderWrapper,Logo,Nav,NavItem,NavSearch,Addition,Button,Searchwrapper,S
 class Header extends Component {
     getListArea(){
         //console.log("1")
-        const {focused,list} =this.props;
-        if(focused){
+        const {focused,list,page,mouseIn,totalPage,handleMouseEnter,handleMouseLeave,handleChangePage} =this.props;
+        const newList = list.toJS();
+        const pageList = [];
+        if (newList.length){
+            for (let i = (page-1)*10;i < page*10;i++){
+                pageList.push(
+                   // <SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
+                   <SearchInfoItem key={i}>{newList[i]}</SearchInfoItem>
+                )
+            }
+        }
+        
+        if(focused || mouseIn){
             return (
-                <SearchInfo>
+                <SearchInfo 
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}>
                     <SearchInfoTitle>
                         热门搜索
-                        <SearchInfoSwitch>
+                        <SearchInfoSwitch onClick={() => handleChangePage(page,totalPage,this.spinIcon)}>
+                        <span ref={(icon) => {this.spinIcon = icon}} className="iconfont spin">&#xe851;</span>
                             换一批
                         </SearchInfoSwitch>
                     </SearchInfoTitle>
                     <SearchInfoList>
-                        {
+                        {/* {
                             list.map((item)=>{
                                 return  <SearchInfoItem key={item}>{item}</SearchInfoItem>
                             })
+                        } */}
+                        {
+                            pageList
                         }
                     </SearchInfoList>
                 </SearchInfo>
@@ -33,7 +50,7 @@ class Header extends Component {
     }
 
     render() {
-         const {focused,handleInputFocus,handleInputBlur} =this.props;
+         const {focused,handleInputFocus,handleInputBlur,list} =this.props;
         return (
             <HeaderWrapper>
                 <Logo />
@@ -48,11 +65,11 @@ class Header extends Component {
                             timeout={200} 
                             classNames='slide'>
                             <NavSearch className={focused ? 'focused':''}
-                                onFocus={handleInputFocus}
+                                onFocus={()=>handleInputFocus(list)}
                                 onBlur={handleInputBlur}
                             ></NavSearch>
                         </CSSTransition>
-                        <span className={focused ? 'focused iconfont':'iconfont'}>&#xe60a;</span>
+                        <span className={focused ? 'focused iconfont zoom':'iconfont zoom'}>&#xe60a;</span>
                         {
                             this.getListArea()
                         }
@@ -74,17 +91,47 @@ const mapStateToProps = (state)=>{
     return {
         focused:state.getIn(['header','focused']),
         //focused:state.get('header').get('focused')
-        list:state.getIn(['header','list'])
+        list:state.getIn(['header','list']),
+        page:state.getIn(['header','page']),
+        totalPage:state.getIn(['header'],'totalPage'),
+        mouseIn:state.getIn(['header','mouseIn']),
     }
 }
 const mapDispathToProps = (dispatch)=>{
     return{
-        handleInputFocus(){
-            dispatch(actionCreators.getList())
+        handleInputFocus(list){
+             (list.size === 0) && dispatch(actionCreators.getList());
+             //下面if语句的缩写
+            // if(list.size === 0){
+            //     dispatch(actionCreators.getList())
+            // }  //解决ajax的重复请求.提升性能
+            
             dispatch(actionCreators.searchFocus())
         },
         handleInputBlur(){
             dispatch(actionCreators.searchblur())
+        },
+        handleMouseEnter(){
+            dispatch(actionCreators.mouseEnter())
+        },
+        handleMouseLeave(){
+            dispatch(actionCreators.mouseLeave())
+        },
+        handleChangePage(page,totalPage,spin){
+            //点击换一批 图标旋转的效果
+            let originAngle = spin.style.transform.replace(/[^0-9]/ig,'');
+            if(originAngle){
+                originAngle=parseInt(originAngle,10);
+            }else{
+                originAngle =0;
+            }
+            spin.style.transform = 'rotate('+(originAngle+360)+'deg)';
+            
+            if(page < totalPage.size){
+                dispatch(actionCreators.changePage(page + 1));
+            }else{
+                dispatch(actionCreators.changePage(1));
+            }
         }
     }
 }
