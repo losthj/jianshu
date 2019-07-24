@@ -24,8 +24,18 @@ yarn add redux和yarn add react-redux
 7、ref可以获取dome节点
 
 8、 store的流程编写 
+
     （1）react是面向数据编程，最难的地方是reducer.js的数据
+
     （2）react要改变数据要遵循redux的单向数据流的流程，首先需要派发action给到store,
     store在给到reducer,reducer返回一个新的数组给到store,store去变更数据内容，当数据发生变更了页面就发生改变。
 
 9、（ajax）避免无意义的请求发送，提升组件性能  if(list.size === 0) 
+
+10、react路由
+
+    路由指的是根据url的不同，显示不同的内容。
+
+安装路由yarn-router-dom 最新的第三方模块
+
+exact表示当你的路径完全相等的时候，才显示内容
