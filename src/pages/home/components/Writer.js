@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
+import {WriterWrapper,WriterTitle} from '../style';
+
 
 class Writer extends Component {
     render() {
         return (
             <div>
-                writer
+                <WriterWrapper>
+                    <WriterTitle>
+                        推荐作者
+                    </WriterTitle>
+
+                </WriterWrapper>
             </div>
         );
     }
