@@ -4,8 +4,9 @@ import {fromJS} from 'immutable';
 const defaultState =fromJS( {
     topicList:[],
     articleList:[],
-    recommendList:[]
-
+    recommendList:[],
+    articePage:1,
+    showScroll:false
 
     // topicList:[{
     //     id:1,
@@ -54,8 +55,16 @@ export default (state = defaultState,action) => {
               topicList:fromJS(action.topicList),
               articleList:fromJS(action.articleList),
               recommendList:fromJS(action.recommendList)
-          })
-        // return  state.set('topList', fromJS(action.topicList));
+          });
+          case constants.ADD_HOME_LIST:
+              //console.log('123')
+              return state.merge({
+                'articleList':state.get('articleList').concat(action.list),
+                'articePage':action.nextPage
+              });
+            //return state.set('articleList', state.get('articleList').concat(action.list))
+          case constants.TOGGLE_SCROLL_TOP:
+            return state.set('showScroll',action.show)
         default:
             return state;
     }
