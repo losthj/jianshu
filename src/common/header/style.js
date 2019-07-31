@@ -6,7 +6,7 @@ export const HeaderWrapper = styled.div`
     height:58px;
     border-bottom:1px solid #f0f0f0;
 `
-export const Logo = styled.a.attrs({href:'/'})`
+export const Logo = styled.div`
     width:100px;
     display:block;
     height:56px;
@@ -16,7 +16,16 @@ export const Logo = styled.a.attrs({href:'/'})`
     background:url(${logoPic});
     background-size:contain;
 `
-
+// export const Logo = styled.a.attrs({href:'/'})`
+//     width:100px;
+//     display:block;
+//     height:56px;
+//     position: absolute;
+//     top:0;
+//     left:0;
+//     background:url(${logoPic});
+//     background-size:contain;
+// `
 export const Nav = styled.div`
  width:960px;
  height:100%;

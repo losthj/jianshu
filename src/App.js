@@ -16,8 +16,9 @@ function App() {
         <GlobalStyle />
         <GlobalStyles />
         <Provider store={store}>
-          <Header />
+         
           <BrowserRouter>
+          <Header />
             {/* <Route path="/" exact render={()=> <div>Home</div>}></Route> */}
             <Route path="/" exact component={Home}></Route>
             <Route path="/detail" exact component={Detail}></Route>

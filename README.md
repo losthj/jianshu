@@ -39,3 +39,5 @@ yarn add redux和yarn add react-redux
 安装路由yarn-router-dom 最新的第三方模块
 
 exact表示当你的路径完全相等的时候，才显示内容
+
+11、PureComponent有数据的时候需要用
