@@ -41,3 +41,13 @@ yarn add redux和yarn add react-redux
 exact表示当你的路径完全相等的时候，才显示内容
 
 11、PureComponent有数据的时候需要用
+
+12、页面路由参数的传递 
+
+1） 通过id获取参数叫做 动态路由获取参数
+
+13、异步组件及withRouter路由方法的使用 **
+
+    yarn add react-loadable 用于加载具有动态导入的组件的高阶组件。
+
+    import {withRouter} from 'react-redux-dom' 

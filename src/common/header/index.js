@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Link} from 'react-router-dom'
 import { CSSTransition } from 'react-transition-group';
 import {actionCreators} from './store/index';
+import {actionCreators as loginActionCreators} from '../../pages/login/store/index';
 import {HeaderWrapper,Logo,Nav,NavItem,NavSearch,Addition,Button,Searchwrapper,SearchInfo,SearchInfoTitle,SearchInfoSwitch,SearchInfoItem,SearchInfoList} from './style';
 
 
@@ -51,7 +52,7 @@ class Header extends Component {
     }
 
     render() {
-         const {focused,handleInputFocus,handleInputBlur,list} =this.props;
+         const {focused,handleInputFocus,handleInputBlur,list,login,logout} =this.props;
         return (
             <HeaderWrapper>
                 <Link to="/">
@@ -59,9 +60,19 @@ class Header extends Component {
                 </Link>
                 
                 <Nav>
-                    <NavItem className='left active'>首页</NavItem>
+                    <Link to="/">
+                        <NavItem className='left active'>首页</NavItem>
+                    </Link>
                     <NavItem className='left'>下载App</NavItem>
-                    <NavItem className='right'>登录</NavItem>
+                    {
+                        login ? 
+                        <NavItem onClick={logout} className='right'>退出</NavItem>
+                        :
+                        <Link to='/login'>
+                            <NavItem className='right'>登录</NavItem>
+                        </Link>
+                    }
+                    {/* <NavItem className='right'>登录</NavItem> */}
                     <NavItem className='right'><span className="iconfont">&#xe636;</span></NavItem>
                     <Searchwrapper>
                         <CSSTransition 
@@ -80,10 +91,12 @@ class Header extends Component {
                     </Searchwrapper>            
                 </Nav>
                 <Addition>
-                    <Button className="writting">
-                        <span className="iconfont">&#xe61d;</span>
-                        写文章
-                    </Button>
+                    <Link to="/write">
+                        <Button className="writting">
+                            <span className="iconfont">&#xe61d;</span>
+                            写文章
+                        </Button>
+                    </Link>
                     <Button className="reg">注册</Button>
                 </Addition>
             </HeaderWrapper>
@@ -99,6 +112,7 @@ const mapStateToProps = (state)=>{
         page:state.getIn(['header','page']),
         totalPage:state.getIn(['header'],'totalPage'),
         mouseIn:state.getIn(['header','mouseIn']),
+        login:state.getIn(['login','login'])
     }
 }
 const mapDispathToProps = (dispatch)=>{
@@ -136,6 +150,9 @@ const mapDispathToProps = (dispatch)=>{
             }else{
                 dispatch(actionCreators.changePage(1));
             }
+        },
+        logout(){
+            dispatch(loginActionCreators.logout())
         }
     }
 }
